@@ -34,9 +34,16 @@ input, textarea{
     background-color: #1a1a1a;
     color:#82e664;
 }
+.end {
+    display: flex;
+    justify-content: end;
+}
 .noTask{
     text-align: center;
 }
-.total{
-    text-align: end;
+.trash {
+    padding-left: 10px;
+}
+.trash:hover {
+    color:red;
 }
