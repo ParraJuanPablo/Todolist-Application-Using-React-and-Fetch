@@ -24,7 +24,7 @@ const Home = () => {
 		.then(data => {
 			//here is where your code should start after the fetch finishes
 			console.log(data); //this will print on the console the exact object received from the server
-			setTodos(JSON.stringify(data))
+			setTodos(data)
 		})
 		.catch(error => {
 			//error handling
@@ -138,18 +138,19 @@ const Home = () => {
 					</input>
 				</li>
 				<ul>
-					{/* {todos.map(t => {
+					{todos.map((todo, i) => {
 						return(
 							<li className="d-flex justify-content-between">
 								<span>
-									<i className="fa-solid fa-chevron-right"></i> {t.label}
+									<i className="fa-solid fa-chevron-right"></i> {todo.label}
 								</span>
 								<span className="hide">
-									<i className="fa-solid fa-x float-right exe" onClick={() => deletePutTodos(t, i)} ></i>
+									<i className="fa-solid fa-x float-right exe" onClick={() => deletePutTodos(todo, i)} ></i>
 								</span>
-							</li>)}
+							</li>
 						)
-					} */}
+					}
+					)}
 				</ul>
 			</ul>
 			<div className={"noTask"+ (todos.length === 0 ? "" : " hide")}>No hay Tareas, agrega una.</div>
