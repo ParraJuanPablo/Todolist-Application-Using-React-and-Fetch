@@ -16,9 +16,9 @@ const Home = () => {
 		}
 		})
 		.then(resp => {
-			console.log(resp.ok); // will be true if the response is successfull
-			console.log(resp.status); // the status code = 200 or code = 400 etc.
-			console.log(resp.text()); // will try return the exact result as string
+			//console.log(resp.ok); // will be true if the response is successfull
+			//console.log(resp.status); // the status code = 200 or code = 400 etc.
+			//console.log(resp.text()); // will try return the exact result as string
 			return resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
 		})
 		.then(data => {
@@ -32,33 +32,35 @@ const Home = () => {
 		});
 	};
 	function addPutTodos(a){
-
-		setTodos(todos.concat({
+		
+		let newTodos = 			[
+			...todos,{
 			"label": a,
 			"done": false
-		  }))
+		  }]
 		
 		fetch('https://assets.breatheco.de/apis/fake/todos/user/ParraJuanPablo', {
 		  method: "PUT",
-		  body: JSON.stringify(todos),
+		  body: JSON.stringify(newTodos),
 		  headers: {
 			"Content-Type": "application/json"
 		  }
 		})
 		.then(resp => {
-			console.log(resp.ok); // will be true if the response is successfull
-			console.log(resp.status); // the status code = 200 or code = 400 etc.
-			console.log(resp.text()); // will try return the exact result as string
+			//console.log(resp.ok); // will be true if the response is successfull
+			//console.log(resp.status); // the status code = 200 or code = 400 etc.
+			//console.log(resp.text()); // will try return the exact result as string
 			return resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
 		})
 		.then(data => {
 			//here is where your code should start after the fetch finishes
-			console.log(data); //this will print on the console the exact object received from the server
+			getTodos(); //this will print on the console the exact object received from the server
 		})
 		.catch(error => {
 			//error handling
 			console.log(error);
 		});
+		
 	};
 	function deletePutTodos(t, i){
 
@@ -112,23 +114,11 @@ const Home = () => {
 			console.log(error);
 		});
 	};
-	const Todos = (props) => {
-	
-		// this function useEffect will run only one time, when the component is finally loaded the first time.
-		useEffect(() =>
-			// here I fetch my todos from the API
-			fetch('https://assets.breatheco.de/apis/fake/todos/user/ParraJuanPablo', {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json"
-				}
-				})
-				.then(r => r.json())
-				.then(data => setTodos(data)) // here it re-set the variable tasks with the incoming data
-		, []);
-	
-		return <ul>{todos.map(t => <li className="d-flex justify-content-between"><span><i className="fa-solid fa-chevron-right"></i> {t.label}</span><span className="hide"><i className="fa-solid fa-x float-right exe" onClick={() => deletePutTodos(t, i)} ></i></span></li>)}</ul>;
-	}
+	useEffect(() =>{
+		// here I fetch my todos from the API
+		getTodos()}
+	, []);
+	console.log(todos)
 	return (
 		<div className="container">
 			<h1>Todo List</h1>
@@ -147,7 +137,20 @@ const Home = () => {
 						placeholder="Agrega una Tarea...">
 					</input>
 				</li>
-				{Todos()}
+				<ul>
+					{/* {todos.map(t => {
+						return(
+							<li className="d-flex justify-content-between">
+								<span>
+									<i className="fa-solid fa-chevron-right"></i> {t.label}
+								</span>
+								<span className="hide">
+									<i className="fa-solid fa-x float-right exe" onClick={() => deletePutTodos(t, i)} ></i>
+								</span>
+							</li>)}
+						)
+					} */}
+				</ul>
 			</ul>
 			<div className={"noTask"+ (todos.length === 0 ? "" : " hide")}>No hay Tareas, agrega una.</div>
 			<div className="end">
